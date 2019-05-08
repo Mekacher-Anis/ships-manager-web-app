@@ -1,0 +1,21 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    min-height: 60px;
+}
+
+body {
+    background-image: url(/uploads/bg-pattern.png);
+}
+
+.main-cont {
+    min-height: calc(100vh - 130px);
+}
+
+.footer {
+    height: 40px;
+}
+  
