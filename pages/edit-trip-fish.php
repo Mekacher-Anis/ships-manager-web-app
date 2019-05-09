@@ -50,7 +50,7 @@
     <div class="container main-cont">
         <div class="jumbotron  my-5 mx-auto mt-3 p-1 col-md-10" style="overflow:auto;">
             <h3 class="text-center text-info">7out</h3>
-            <div class="form-inline d-flex justify-content-center">
+            <div class="form-inline d-flex justify-content-center mb-6">
                 <div class="form-group">
                     <label for="fish-name-input">Esem</label>
                     <input list="fish-list" name="fish-name" id="fish-name-input" class="form-control mx-2"
@@ -87,7 +87,7 @@
                 </button>
             </div>
 
-            <table class="table table-striped mt-2" id="trip-fish-table">
+            <table class="table table-striped mt-2" id="trip-fish-table" style="background-color : #ffff75;">
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
@@ -119,11 +119,21 @@
                 </tbody>
             </table>
 
+            <?php
+                require_once "../includes/dbconfig.php";
+                $sql = "SELECT `Gain` FROM `Trips` WHERE `TripID`=?;";
+                $stmt = $db->prepare($sql);
+                if ( $stmt->bind_param("i", $_GET['tripid'] )) {
+                    if($stmt->execute())
+                        $row = ($stmt->get_result())->fetch_assoc();
+                }
+            ?>
+
             <div class="jumbotron m-3 p-3" style="background-color: #9bff9e;">
-                <h4 class="d-inline mx-3">Tirarat : </h4>
-                <h4 class="d-inline mx-3">7out :</h4>
-                <h4 class="d-inline mx-3">Mad5oul : </h4>
-                <h4 class="d-inline mx-3">Dinar/Tirar : </h4>
+                <h4 class="d-inline mx-3">Tirarat : </h4><h4 class="d-inline" id="trip-info-fish">0</h4><br>
+                <h4 class="d-inline mx-3">7out : </h4><h4 class="d-inline" id="trip-info-free-fish">0</h4><br>
+                <h4 class="d-inline mx-3">Mad5oul : </h4><h4 class="d-inline" id="trip-info-income"><?php echo round($row['Gain'],3); ?></h4><br>
+                <h4 class="d-inline mx-3">Dinar/Tirar : </h4><h4 class="d-inline" id="trip-info-avg">0</h4><br>
             </div>
         </div>
     </div>
@@ -135,9 +145,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="../scripts/edit-trip-fish.js"></script>
 

@@ -1,7 +1,11 @@
+var fishNum = 0;
+var freeFishNum = 0;
+var income = 0;
+
 $(document).ready(() => {
-    $("#trip-fish-table").DataTable();
+    income = parseInt($("#trip-info-income").text());
     loadFishTable();
-})
+});
 
 function loadFishTable() {
     var req = new XMLHttpRequest();
@@ -39,6 +43,24 @@ function addFishTableRow(tbdoy, name, type, number, tripid, fishid) {
     });
     clone.show();
     tbdoy.append(clone);
+
+    updateInfo(type,number);
+}
+
+function updateInfo(type,number) {
+    switch(type){
+        case 'Ak7el':
+        case 'A7mer':
+            fishNum += number;
+            $('#trip-info-fish').text(fishNum);
+            $("#trip-info-avg").text(Math.round(income / (fishNum + freeFishNum)));
+            break;
+        case '7out':
+            freeFishNum += number;
+            $('#trip-info-free-fish').text(freeFishNum);
+            $("#trip-info-avg").text(Math.round(income / (fishNum + freeFishNum)));
+            break;
+    }
 }
 
 function addFish(tripid) {
