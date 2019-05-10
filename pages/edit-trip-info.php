@@ -110,7 +110,7 @@ if (!isset($_GET['tripid'])) {
                     <input type="text" class="form-control" name="gain" value="<?php echo round($row['Gain'],3);?>"
                     id="gain-input" required>
                 </div>
-                <input type="hidden" id="tripid" name="tripid" value="<?php echo $_GET['tripid'];?>" required>
+                <input type="hidden" id="tripid" name="tripid" value="<?php echo $_GET['tripid'];?>" >
                 <button class="btn btn-danger" name="remove-trip" value="remove" >remove</button>
                 <button type="submit"
                     class="btn btn-success float-right"><?php echo ($_GET['tripid'] == 0) ? "add" : "save"; ?></button>

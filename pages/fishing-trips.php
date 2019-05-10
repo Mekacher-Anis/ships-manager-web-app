@@ -83,7 +83,7 @@
                             $numDays = round($secondsDiff / (60 * 60)) + 24;
 
                 ?>
-                    <tr id="<?php echo $row['TripID'];?>" onclick="showDropdown()">
+                    <tr onclick="showDropdown(<?php echo $row['TripID'] . "," . (($row['Gain'] - $row['Expenses']) ? $row['Gain'] - $row['Expenses'] : "-") ;?>)">
                         <td><?php echo $row['Departure'] ?></td>
                         <td><?php echo ($row['Arrival']) ? $row['Arrival'] : "-" ?></td>
                         <td><?php echo ($row['Gain']) ? round($row['Gain'],3) : "-" ?></td>

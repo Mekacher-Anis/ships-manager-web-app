@@ -8,10 +8,10 @@ switch ($_GET['request']) {
 
 function retrieve(){
     require_once "dbconfig.php";
-    $sql = "SELECT `ExpensID`,`Name`,`Value` FROM `TripsExpenses` WHERE (`TripID`=? AND `ExpTypeID`=1);";
+    $sql = "SELECT `ExpensID`,`Name`,`Value` FROM `TripsExpenses` WHERE (`TripID`=? AND `ExpTypeID`=?);";
     $stmt = $db->prepare($sql);
     $result = array();
-    if ($stmt->bind_param("i", $_GET['tripid'])) {
+    if ($stmt->bind_param("ii", $_GET['tripid'],$_GET['expensetype'])) {
         if ($stmt->execute()) {
             $data = $stmt->get_result();
             while($row = $data->fetch_assoc())
@@ -24,10 +24,10 @@ function retrieve(){
 
 function add(){
     require_once "dbconfig.php";
-    $sql = "INSERT INTO `TripsExpenses`(`TripID`, `Name`, `Value`, `Date`) VALUES (?,?,?,?);";
+    $sql = "INSERT INTO `TripsExpenses`(`TripID`, `Name`, `Value`, `Date`,`ExpTypeID`) VALUES (?,?,?,?,?);";
     $stmt = $db->prepare($sql);
     $date = date( 'Y-m-d' );
-    if ($stmt->bind_param("isds", $_GET['tripid'], $_GET['name'], $_GET['value'],$date) )
+    if ($stmt->bind_param("isdsi", $_GET['tripid'], $_GET['name'], $_GET['value'],$date,$_GET['expensetype']) )
         echo ($stmt->execute()) ? $stmt->insert_id : "fail";
 }
 

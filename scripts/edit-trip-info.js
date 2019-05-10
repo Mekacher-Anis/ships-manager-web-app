@@ -96,13 +96,13 @@ function loadExpensesTable(){
             });
         }
     }
-    let url = "/includes/retrieve-add-delete-trip-expenses.php?request=retrieve&tripid=" + $("#tripid").val();
+    let url = "/includes/retrieve-add-delete-trip-expenses.php?request=retrieve&tripid=" + $("#tripid").val() + "&expensetype=1";
     req.open("GET", url, true);
     req.send();
 }
 
 function addExpensesTableRow(tbdoy, name, value, expenseID) {
-    let clone = $("#workers-tablerow-template").clone();
+    let clone = $("#expenses-tablerow-template").clone();
     clone.attr("id", "");
     clone.children().eq(0).text(name);
     clone.children().eq(1).text(value);
@@ -131,7 +131,7 @@ function addExpense(tripid) {
 
     if (!isNaN(value)) {
         let url = "/includes/retrieve-add-delete-trip-expenses.php?request=add&tripid="
-        +tripid+"&name="+expenseName+"&value="+value;
+        +tripid+"&name="+expenseName+"&value="+value + "&expensetype=1";
         req.open("GET", url, true);
         req.send();
     }
