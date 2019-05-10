@@ -51,6 +51,7 @@
 
     <div class="container main-cont">
         <div class="jumbotron text-center my-5 p-1" style="overflow:auto;">
+            <div id="pdf-content">
             <h4 class="my-3 text-info">Manab L'ba7ara (48%) : <?php echo round($fisherShare,3);?></h4>
             <table class="table table-striped table-responsive-sm">
                 <thead class="thead-dark">
@@ -95,7 +96,7 @@
             <input type="hidden" name="ownershare" id="ownershare" value="<?php echo round($_GET['netgain'] - $fisherShare,3);?>">
             <div class="expenses-edit-container mt-3 p-2 rounded w-75 mx-auto" style="background-color:#d6d6d6;">
                 <h3 class="text-center text-warning">7rouguat L'Moujahez</h3>
-                <div class="form-inline d-flex justify-content-center">
+                <div class="form-inline d-flex justify-content-center" id="expenses-input">
                     <label for="fisher-name-input">Esem</label>
                     <input type="text" name="expense-name" id="expense-name-input" class="form-control mx-2">
                     <label for="fisher-name-input" class="mt-2 mt-md-0">9ima</label>
@@ -128,6 +129,9 @@
                 </table>
             </div>
             <h4 id="ownerNetGain" class="my-3 text-info">Mad5oul Safi :</h4>
+            </div>
+
+            <button class="btn btn-sm btn-primary" onclick="generatePDF()">pdf</button>
         </div>
     </div>
 

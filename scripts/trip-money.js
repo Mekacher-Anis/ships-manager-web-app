@@ -77,3 +77,19 @@ function deleteExpense(expenseID, srcElement, value) {
     req.open("GET", url, true);
     req.send();
 }
+
+function generatePDF() {
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){            
+            let tab = window.open(this.responseText);
+        }
+    };
+
+    req.open("POST","/includes/generate-pdf.php",true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var clone = $("#pdf-content").clone();
+    clone.find("#expenses-input").remove();
+    req.send("html=" + clone.html());
+}
