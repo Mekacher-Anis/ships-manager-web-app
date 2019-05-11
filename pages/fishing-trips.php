@@ -132,7 +132,12 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script type="text/javascript" src="../scripts/fishing-trips.js"></script>
-
+    <script>
+    window.history.pushState(null,null,location.href);
+    window.onpopstate = function() {
+        location.href = "category-selection.php";
+    };
+    </script>
 </body>
 
 </html>
