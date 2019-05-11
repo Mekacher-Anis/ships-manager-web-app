@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    window.history.pushState(null,null,location.href);
+    window.onpopstate = function() {
+            location.href = "category-selection.php";
+    };
     $('#trips-table').DataTable();
 });
 

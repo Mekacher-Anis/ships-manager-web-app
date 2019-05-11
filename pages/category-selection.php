@@ -8,9 +8,9 @@
             header('Location: ../index.php');
     }
 
-    if (!isset($_GET['shipid']) AND !isset($_SESSION['shipid'])) {
+    if ( !isset($_GET['shipid']) AND (!isset($_SESSION['shipid'])) ) {
         header("Location: ship-selection.php");
-    }else
+    }elseif(!isset($_SESSION['shipid']))
         $_SESSION['shipid'] = $_GET['shipid'];
 ?>
 
