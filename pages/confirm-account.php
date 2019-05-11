@@ -61,7 +61,7 @@ if (mysqli_stmt_prepare($stmt, $sql)) {
 <body>
 
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="#">Social Synergy</a>
+        <a class="navbar-brand" href="../index.php">Social Synergy</a>
     </nav>
 
     <div class="container main-cont">

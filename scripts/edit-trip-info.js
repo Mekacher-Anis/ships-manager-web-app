@@ -1,5 +1,8 @@
-
 $(document).ready(() => {
+    window.history.pushState(null,null,location.href);
+        window.onpopstate = function() {
+            location.href = "fishing-trips.php";
+    }
     loadWorkersTable();
     loadExpensesTable();
 })
@@ -7,7 +10,7 @@ $(document).ready(() => {
 
 /*****************************************Workers****************************************/
 
-function loadWorkersTable(){
+function loadWorkersTable() {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -15,8 +18,8 @@ function loadWorkersTable(){
             let tableBody = $("#trip-workers-table").children(":last");
 
             res.forEach(row => {
-                addWorkerTableRow(tableBody,row['WorkerID']+ " - " +row['Name'] + " " + row['Lastname'],
-                Math.round(row['PartialPayment'] * 1000) / 1000,row['TripID'], row['WorkerID']);
+                addWorkerTableRow(tableBody, row['WorkerID'] + " - " + row['Name'] + " " + row['Lastname'],
+                    Math.round(row['PartialPayment'] * 1000) / 1000, row['TripID'], row['WorkerID']);
             });
         }
     }
@@ -58,8 +61,8 @@ function addWorker(tripid) {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText == "ok") {
                 let tableBody = $("#trip-workers-table").children(":last");
-                addWorkerTableRow(tableBody,workerName,
-                Math.round(partialPayment * 1000) / 1000,tripid, workerID);
+                addWorkerTableRow(tableBody, workerName,
+                    Math.round(partialPayment * 1000) / 1000, tripid, workerID);
             }
         }
     }
@@ -76,15 +79,16 @@ function addWorker(tripid) {
             tripid + "&workerid=" + workerID + "&payment=" + partialPayment;
         req.open("GET", url, true);
         req.send();
-    }else{
-        window.location.href="/pages/add-new-worker.php?tripid="+tripid;
+    } else {
+        window.location.href = "/pages/add-new-worker.php?tripid=" +
+            tripid + "&back=" + window.location.pathname + window.location.search;
     }
 }
 
 
 /*****************************************Expenses****************************************/
 
-function loadExpensesTable(){
+function loadExpensesTable() {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -92,7 +96,7 @@ function loadExpensesTable(){
             let tableBody = $("#trip-expenses-table").children(":last");
 
             res.forEach(row => {
-                addExpensesTableRow( tableBody,row['Name'], Math.round(row['Value'] * 1000) / 1000, row['ExpensID'] );
+                addExpensesTableRow(tableBody, row['Name'], Math.round(row['Value'] * 1000) / 1000, row['ExpensID']);
             });
         }
     }
@@ -119,7 +123,7 @@ function addExpense(tripid) {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText != "fail") {
                 let tableBody = $("#trip-expenses-table").children(":last");
-                addExpensesTableRow(tableBody,expenseName,value,this.responseText);
+                addExpensesTableRow(tableBody, expenseName, value, this.responseText);
             }
         }
     }
@@ -130,8 +134,8 @@ function addExpense(tripid) {
         return;
 
     if (!isNaN(value)) {
-        let url = "/includes/retrieve-add-delete-trip-expenses.php?request=add&tripid="
-        +tripid+"&name="+expenseName+"&value="+value + "&expensetype=1";
+        let url = "/includes/retrieve-add-delete-trip-expenses.php?request=add&tripid=" +
+            tripid + "&name=" + expenseName + "&value=" + value + "&expensetype=1";
         req.open("GET", url, true);
         req.send();
     }

@@ -7,17 +7,6 @@
             session_destroy();
             header('Location: ../index.php');
     }
-
-
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        require_once "../includes/dbconfig.php";
-        $sql = "INSERT INTO `Workers`(`ShipID`, `Name`, `Lastname`, `Share`) VALUES (?,?,?,?);";
-        $stmt = $db->prepare($sql);
-        if($stmt->bind_param("issd",$_SESSION['shipid'],$_POST['name'],$_POST['lastname'],$_POST['share'])){
-            if($stmt->execute())
-                header("Location: ..".$_POST['returnAdr']);
-        }
-    }
 ?>
 
 <!DOCTYPE html>
@@ -59,26 +48,32 @@
     </nav>
 
     <div class="container main-cont">
-        <div class="jumbotron text-center mx-auto my-5 pt-0 col-md-8 col-lg-6" style="overflow:auto;">
-            <h4 class="my-3 text-info">Ba7ar</h4>
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="form">
-                <div class="form-group">
-                    <label for="name-input-field">Esem</label>
-                    <input type="text" name="name" class="form-control" autocomplete="off" required>
-                </div>
-                <div class="form-group">
-                    <label for="name-input-field">La9ab</label>
-                    <input type="text" name="lastname" class="form-control" autocomplete="off" required>
-                </div>
-                <div class="form-group">
-                    <label for="name-input-field">Bay</label>
-                    <input type="text" name="share" id="share-input" class="form-control" autocomplete="off" required>
-                </div>
-                <input type="hidden" name="tripid" value="<?php echo $_GET['tripid'] ?>">
-                <input type="hidden" name="returnAdr" value="<?php echo $_GET['back'] ?>">
-                <input type="submit" id="new-worker-submit-button" class="btn btn-lg btn-success float-right my-2"
-                    value="add" disabled>
-            </form>
+        <div class="jumbotron text-center my-5 overflow-auto">
+            <table class="table table-striped" id="workers-table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Esem</th>
+                        <th>Bay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        require_once "../includes/dbconfig.php";
+                        $sql = "SELECT * FROM `Workers` WHERE `ShipID`=" . $_SESSION['shipid'];
+                        if($result = $db->query($sql)){
+                            while($row = $result->fetch_assoc()){
+                    ?>
+                    <tr onclick="alert('fuck');">
+                        <td><?php echo $row['Name']." ".$row['Lastname']?></td>
+                        <td><?php echo $row['Share']?></td>
+                    </tr>
+                    <?php
+                            }
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <a href="add-new-worker.php?back=<?php echo $_SERVER['REQUEST_URI']?>" class="btn btn-success float-right">add</a>
         </div>
     </div>
 
@@ -90,16 +85,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <script>
-        $(document).ready(() => {
-            $("#share-input").change(function (event) {
-                if (!isNaN(event.target.value))
-                    $("#new-worker-submit-button").removeAttr("disabled");
-                else
-                    $("#new-worker-submit-button").attr("disabled", "");
-            });
-        })
-    </script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="../scripts/workers.js"></script>
 
 </body>
 

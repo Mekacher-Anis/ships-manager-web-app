@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Ships Manager</a>
+    <a class="navbar-brand" href="../index.php">Ships Manager</a>
   </nav>
 
   <div class="container main-cont">

@@ -59,7 +59,7 @@
                     <img src="../images/icons/fishing.svg" class="rounded img-fluid" style="height:150px;width:150px;">
                     <h4 class="my-2">Ser7at</h4>
                 </a>
-                <a class="btn btn-primary col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-2">
+                <a href="workers.php" class="btn btn-primary col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-2">
                     <img src="../images/icons/fisherman.svg" class="rounded img-fluid"
                         style="height:150px;width:150px;">
                     <h4 class="my-2">Ba7ara</h4>
@@ -82,6 +82,13 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        window.history.pushState(null,null,location.href);
+        window.onpopstate = function() {
+            location.href = "ship-selection.php";
+        }
+    </script>
 
 </body>
 
