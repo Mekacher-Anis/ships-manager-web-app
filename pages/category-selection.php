@@ -66,7 +66,7 @@
                 </a>
             </div>
             <div class="row">
-                <a class="btn btn-primary col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-2">
+                <a href="statistics.php" class="btn btn-primary col-8 col-sm-5 col-md-4 col-lg-3 mx-auto my-2">
                     <img src="../images/icons/static-bars.svg" class="rounded img-fluid"
                         style="height:150px;width:150px;">
                     <h4 class="my-2">7sabat</h4>
