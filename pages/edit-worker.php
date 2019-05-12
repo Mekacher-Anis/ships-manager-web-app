@@ -9,15 +9,36 @@
     }
 
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        require_once "../includes/dbconfig.php";
-        $sql = "INSERT INTO `Workers`(`ShipID`, `Name`, `Lastname`, `Share`) VALUES (?,?,?,?);";
-        $stmt = $db->prepare($sql);
-        if($stmt->bind_param("issd",$_SESSION['shipid'],$_POST['name'],$_POST['lastname'],$_POST['share'])){
-            if($stmt->execute())
-                header("Location: ..".$_POST['returnAdr']);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once "../includes/dbconfig.php";
+    if(isset($_POST['remove'])){
+        $workerid = filter_var($_POST['workerid'],FILTER_SANITIZE_NUMBER_INT);
+        $sql = "DELETE FROM `Workers` WHERE `WorkerID`=" . $workerid;
+        if($db->query($sql)){
+            header("Location: .." . $_POST['returnAdr']);
         }
     }
+    if ($_POST['workerid'] == 0) {
+        $sql = "INSERT INTO `Workers`(`ShipID`, `Name`, `Lastname`, `Share`) VALUES (?,?,?,?);";
+        $stmt = $db->prepare($sql);
+        if ($stmt->bind_param("issd", $_SESSION['shipid'], $_POST['name'], $_POST['lastname'], $_POST['share'])) {
+            if ($stmt->execute()) {
+                header("Location: .." . $_POST['returnAdr']);
+            }
+
+        }
+    }elseif($_POST['workerid'] > 0){
+        $sql = "UPDATE `Workers` SET `Name`=?,`Lastname`=?,`Share`=? WHERE `WorkerID`=?";
+        $stmt = $db->prepare($sql);
+        if ($stmt->bind_param("ssdi",$_POST['name'], $_POST['lastname'], $_POST['share'],$_POST['workerid'])) {
+            if ($stmt->execute()) {
+                header("Location: .." . $_POST['returnAdr']);
+            }
+
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -62,22 +83,34 @@
         <div class="jumbotron text-center mx-auto my-5 pt-0 col-md-8 col-lg-6" style="overflow:auto;">
             <h4 class="my-3 text-info">Ba7ar</h4>
             <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="form">
+                <?php
+                    if($_GET['workerid'] != 0){
+                    require_once "../includes/dbconfig.php";
+                    $workerid = filter_var($_GET['workerid'],FILTER_SANITIZE_NUMBER_INT);
+                    $sql = "SELECT * FROM `Workers` WHERE `WorkerID`=" . $workerid;
+                    if($result = $db->query($sql)){
+                        $row = $result->fetch_assoc();
+                    }}
+                ?>
                 <div class="form-group">
                     <label for="name-input-field">Esem</label>
-                    <input type="text" name="name" class="form-control" autocomplete="off" required>
+                    <input type="text" name="name" value="<?php echo $row['Name']; ?>" class="form-control" autocomplete="off" required>
                 </div>
                 <div class="form-group">
                     <label for="name-input-field">La9ab</label>
-                    <input type="text" name="lastname" class="form-control" autocomplete="off" required>
+                    <input type="text" name="lastname" value="<?php echo $row['Lastname'];?>" class="form-control" autocomplete="off" required>
                 </div>
                 <div class="form-group">
                     <label for="name-input-field">Bay</label>
-                    <input type="text" name="share" id="share-input" class="form-control" autocomplete="off" required>
+                    <input type="text" name="share" value="<?php echo $row['Share'];?>" id="share-input" class="form-control" autocomplete="off" required>
                 </div>
-                <input type="hidden" name="tripid" value="<?php echo $_GET['tripid'] ?>">
                 <input type="hidden" name="returnAdr" value="<?php echo $_GET['back'] ?>">
+                <input type="hidden" name="workerid" value="<?php echo $_GET['workerid'];?>">
                 <input type="submit" id="new-worker-submit-button" class="btn btn-lg btn-success float-right my-2"
-                    value="add" disabled>
+                    value="<?php echo ($_GET['workerid'] == 0) ? "add" : "save"; ?>" disabled>
+                <?php if($_GET['workerid'] != 0){?>
+                <input type="submit" class="btn btn-lg btn-danger float-left my-2" name="remove" value="remove">
+                <?php }?>
             </form>
         </div>
     </div>

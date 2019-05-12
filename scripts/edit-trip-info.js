@@ -80,8 +80,7 @@ function addWorker(tripid) {
         req.open("GET", url, true);
         req.send();
     } else {
-        window.location.href = "/pages/add-new-worker.php?tripid=" +
-            tripid + "&back=" + window.location.pathname + window.location.search;
+        window.location.href = "/pages/edit-worker.php?workerid=0&back=" + window.location.pathname + window.location.search;
     }
 }
 

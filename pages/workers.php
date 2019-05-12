@@ -63,7 +63,7 @@
                         if($result = $db->query($sql)){
                             while($row = $result->fetch_assoc()){
                     ?>
-                    <tr onclick="alert('fuck');">
+                    <tr onclick="window.location.href = 'edit-worker.php?<?php echo 'workerid='.$row['WorkerID'].'&back='.$_SERVER['REQUEST_URI']?>'">
                         <td><?php echo $row['Name']." ".$row['Lastname']?></td>
                         <td><?php echo $row['Share']?></td>
                     </tr>
@@ -73,7 +73,7 @@
                     ?>
                 </tbody>
             </table>
-            <a href="add-new-worker.php?back=<?php echo $_SERVER['REQUEST_URI']?>" class="btn btn-success float-right">add</a>
+            <a href="edit-worker.php?workerid=0&back=<?php echo $_SERVER['REQUEST_URI']?>" class="btn btn-success float-right">add</a>
         </div>
     </div>
 
