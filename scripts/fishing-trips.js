@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    $('#trips-table').DataTable();
+    $('#trips-table').DataTable({
+        "order": [[ 0, "desc" ]]
+    });
 });
 
 
