@@ -29,7 +29,8 @@ if (isset($_GET["logout"])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#">Ships Manager</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -50,7 +51,8 @@ if (isset($_GET["logout"])) {
             <div class="form-inline">
                 <div class="form-group mx-auto mx-md-0">
                     <label class="mx-3" for="time-period">Period</label>
-                    <input list="period-list" value="1 Month" class="form-control" id="time-period" onclick="$(this).val('')" onchange="loadData();">
+                    <input list="period-list" value="1 Month" class="form-control" id="time-period"
+                        onclick="$(this).val('')" onchange="loadData();">
                     <datalist id="period-list">
                         <option value="1 Month"></option>
                         <option value="6 Months"></option>
@@ -69,8 +71,14 @@ if (isset($_GET["logout"])) {
             </div>
 
             <div class="row justify-content-center">
-                <div class="ct-chart ct-square my-5 col-12 col-md-5" id="expenses-chart"></div>
-                <div class="ct-chart ct-perfect-fourth col-12 col-md-5 my-auto" id="gain-chart"></div>
+                <div class="my-5 col-12 col-md-5">
+                    <h3 class="p-0 mx-auto">7rouguat</h3>
+                    <div class="ct-chart ct-square" id="expenses-chart"></div>
+                </div>
+                <div class="col-12 col-md-5 my-auto">
+                    <h3 class="p-0 mx-auto">Income</h3>
+                    <div class="ct-chart ct-perfect-fourth" id="gain-chart"></div>
+                </div>
             </div>
         </div>
     </div>

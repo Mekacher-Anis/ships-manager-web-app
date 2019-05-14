@@ -88,29 +88,19 @@ function sendMail($mail, $sender, $isHTML, $subject, $body, ...$recipients)
     $mail->send();
 }
 
-function getTargetFileName($uploadName){
-    $fileExt = strtolower(pathinfo($_FILES[$uploadName]["name"],PATHINFO_EXTENSION));
+function getTargetFileName($uploadedFileName){
+    $fileExt = strtolower(pathinfo($uploadedFileName,PATHINFO_EXTENSION));
     $target_file = "/uploads/" . bin2hex(random_bytes(10)) . "." . $fileExt;
+    while(file_exists("..".$target_file))
+        $target_file = "/uploads/" . bin2hex(random_bytes(10)) . "." . $fileExt;
     return $target_file;
-}
-
-function getTargetExistingFileName($uploadName,$oldName){
-    $fileExt = strtolower(pathinfo($_FILES[$uploadName]["name"],PATHINFO_EXTENSION));
-    $existingFileName = strtolower(pathinfo($oldName,PATHINFO_FILENAME));
-    $target_file = "/uploads/" . $existingFileName . "." . $fileExt;
-    return $target_file;
-}
-
-function getTargetFileExt($uploadName){
-    $fileExt = strtolower(pathinfo($_FILES[$uploadName]["name"],PATHINFO_EXTENSION));
-    return $fileExt;
 }
 
 function uploadImage($uploadName,$target_file_name,$oldFileName)
 {
     $msg = "";
     $target_file = ".." . $target_file_name;
-    $fileExt = getTargetFileExt($uploadName);
+    $fileExt = strtolower(pathinfo($_FILES[$uploadName]["name"],PATHINFO_EXTENSION));
     $uploadOk = 1;
 // Check if image file is a actual image or fake image
     $check = getimagesize($_FILES[$uploadName]["tmp_name"]);
@@ -138,8 +128,8 @@ function uploadImage($uploadName,$target_file_name,$oldFileName)
 // if everything is ok, try to upload file
     } else {
         // Check if file already exists, delete it
-        if (file_exists($oldFileName)) {
-            unlink(realpath($oldFileName));
+        if (file_exists("..".$oldFileName)  && $oldFileName != "/uploads/cruise.png") {
+            unlink(realpath(".." . $oldFileName));
         }
         if (move_uploaded_file($_FILES[$uploadName]["tmp_name"], $target_file)) {
             return true;
