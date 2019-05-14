@@ -138,9 +138,7 @@
         </div>
     </div>
 
-    <footer class="footer bg-primary text-center">
-        <p>Ships Manager Copyright &copy; </p>
-    </footer>
+    <?php include "footer.php" ?>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

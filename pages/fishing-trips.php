@@ -104,9 +104,7 @@
         </div>
     </div>
 
-    <footer class="footer bg-primary text-center">
-        <p>Ships Manager Copyright &copy; </p>
-    </footer>
+    <?php include "footer.php" ?>
 
     <div id="tablerow_template" class="d-none">
         <tr>
