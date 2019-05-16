@@ -14,8 +14,3 @@ body {
 .main-cont {
     min-height: calc(100vh - 130px);
 }
-
-.footer {
-    height: 40px;
-}
-  
